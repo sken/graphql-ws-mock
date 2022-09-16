@@ -26,7 +26,7 @@ client.subscribe(
 
 client.subscribe(
     {
-        query: 'subscription { greetings }',
+        query: 'subscription { postCreated }',
     },
     {
         next: (data) => {

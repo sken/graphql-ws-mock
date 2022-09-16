@@ -1,6 +1,9 @@
 import {GraphQLSchema, GraphQLObjectType, GraphQLString} from 'graphql';
 
 
+import { PubSub } from 'graphql-subscriptions';
+const pubsub = new PubSub();
+
 export const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
         name: 'Query',
@@ -14,13 +17,14 @@ export const schema = new GraphQLSchema({
     subscription: new GraphQLObjectType({
     name: 'Subscription',
     fields: {
-        greetings: {
+        postCreated: {
             type: GraphQLString,
-            subscribe: async function* () {
-                for (const hi of ['Hi', 'Bonjour', 'Hola', 'Ciao', 'Zdravo']) {
-                    yield { greetings: hi };
-                }
-            },
+            subscribe: () => pubsub.asyncIterator(['POST_CREATED']),
         },
     }})
 });
+
+
+setInterval(() => {
+    pubsub.publish('POST_CREATED', { postCreated: JSON.stringify({ "author": "test"}) });
+}, 5000)
