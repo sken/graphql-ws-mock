@@ -11,4 +11,16 @@ export const schema = new GraphQLSchema({
             },
         },
     }),
+    subscription: new GraphQLObjectType({
+    name: 'Subscription',
+    fields: {
+        greetings: {
+            type: GraphQLString,
+            subscribe: async function* () {
+                for (const hi of ['Hi', 'Bonjour', 'Hola', 'Ciao', 'Zdravo']) {
+                    yield { greetings: hi };
+                }
+            },
+        },
+    }})
 });

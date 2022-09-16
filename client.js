@@ -24,3 +24,19 @@ client.subscribe(
 );
 
 
+client.subscribe(
+    {
+        query: 'subscription { greetings }',
+    },
+    {
+        next: (data) => {
+            console.log(data)
+        },
+        error: () => {
+        },
+        complete: () => {
+
+        },
+    });
+
+
